@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    volumes:
+      - ./data:/var/lib/pgadmin
+    env_file:
+      - .env
+  gw:
+    build:
+      dockerfile: Dockerfile.gw
+      context: .
+    command: ["gw", "--url", "http://pgadmin", "--secrets", "/run/secrets/tunnel.json"]
+    secrets:
+      - tunnel.json
+secrets:
+  tunnel.json:
+    file: secrets/tunnel.json
