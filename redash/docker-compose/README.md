@@ -9,15 +9,9 @@
 $ docker-compose run --rm server create_db
 ```
 
-3. Change ownership to generated data folder to your current user
-
+3. Run service
 ```
-$ sudo chown -R $(id -u):$(id -g) data/
-```
-
-4. Run service
-```
-$ docker-compose up --build
+$ sudo docker-compose up --build
 ```
 
 - The `volume` setting in the `docker-compose.yml` defines local directory to expose to.
