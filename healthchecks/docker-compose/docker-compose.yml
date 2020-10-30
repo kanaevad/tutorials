@@ -1,0 +1,23 @@
+---
+version: "2.1"
+services:
+  healthchecks:
+    image: linuxserver/healthchecks
+    container_name: healthchecks
+    env_file:
+      - .env
+    volumes:
+      - .data/:/config
+    ports:
+      - 8000:8000
+    restart: unless-stopped
+  gw:
+    build:
+      dockerfile: Dockerfile.gw
+      context: .
+    command: ["gw", "--url", "http://healthchecks:8000", "--secrets", "/run/secrets/tunnel.json"]
+    secrets:
+      - tunnel.json
+secrets:
+  tunnel.json:
+    file: secrets/tunnel.json
